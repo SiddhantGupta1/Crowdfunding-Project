@@ -1,19 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {FaTimes} from 'react-icons/fa'
 import { useGlobalState, setGlobalState } from '../store/Index'
+import { createProject } from '../services/blockchain'
+import { toast } from 'react-toastify'
 
 const CreateProject = () => {
     const [createModal] = useGlobalState('createModal')
+
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [cost, setCost] = useState("")
+    const [date, setDate] = useState("")
+    const [imageURL, setImageURL] = useState("")
+    
+    const toTimeStamp = (dateStr) => {
+        const dateObj = Date.parse(dateStr)
+        return dateObj/1000
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if(!title || !description || !cost || !date || !imageURL)
+        {
+            return
+        }
+        
+        const params = {
+            title,
+            description,
+            cost,
+            expiresAt: toTimeStamp(date),
+            imageURL,
+        }
+
+        await createProject(params)
+        toast.success('Project Created Successfully, will reflect under a minute.')
+        onClose()
+    }
+
+    const onClose = () => {
+        setGlobalState('createModal', 'scale-0')
+        reset()
+    }
+
+    const reset = () => {
+        setTitle('')
+        setDescription('')
+        setCost('')
+        setImageURL('')
+        setDate('')
+    }
+
   return (
     <div className={`fixed top-0 left-0 w-screen h-screen 
         flex justify-center items-center bg-black bg-opacity-50 
         transform transition-transform duration-300 ${createModal}`}>
         <div className='bg-white shadow-xl shadow-black rounded-xl w-11/12 md:w-2/5 h-7/12 p-6'>
-            <form className='flex flex-col'>
+            <form onSubmit={handleSubmit} className='flex flex-col'>
                 <div className="flex justify-between items-center">
                     <p className='font-semibold'>Add Project</p>
                     <button type='button' className='border-0 bg-transparent focus:outline-none' 
-                        onClick={() => setGlobalState('createModal', 'scale-0')}>
+                        onClick={onClose}>
                         <FaTimes />
                     </button>
                 </div>
@@ -21,7 +68,7 @@ const CreateProject = () => {
                 <div className='flex justify-center items-center mt-5'>
                     <div className='rounded-xl overflow-hidden h-20 w-20'>
                     
-                        <img src="https://intigate.co.in/wp-content/uploads/2021/07/healthcare.jpg" 
+                        <img src={imageURL || "https://intigate.co.in/wp-content/uploads/2021/07/healthcare.jpg"} 
                         alt="project title" className='h-full w-full object-cover cursor-pointer'/>
 
                     </div>
@@ -32,6 +79,8 @@ const CreateProject = () => {
                         type='text'
                         name='title'
                         placeholder='Title'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         required    
                     />
                 </div>
@@ -41,8 +90,10 @@ const CreateProject = () => {
                         type='number'
                         step={0.01} 
                         min={0.01}
-                        name='amount'
-                        placeholder='Amount (ETH)'
+                        name='cost'
+                        placeholder='cost (ETH)'
+                        value={cost}
+                        onChange={(e) => setCost(e.target.value)}
                         required    
                     />
                 </div>
@@ -52,6 +103,8 @@ const CreateProject = () => {
                         type='date'
                         name='date'
                         placeholder='Expires'
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
                         required    
                     />
                 </div>
@@ -61,6 +114,8 @@ const CreateProject = () => {
                         type='url'
                         name='imageURL'
                         placeholder='Image URL'
+                        value={imageURL}
+                        onChange={(e) => setImageURL(e.target.value)}
                         required    
                     />
                 </div>
@@ -70,6 +125,8 @@ const CreateProject = () => {
                         type='text'
                         name='description'
                         placeholder='Description'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required    
                     ></textarea>
                 </div>
