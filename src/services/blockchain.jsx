@@ -87,6 +87,51 @@ const createProject = async ({
   }
 }
 
+const updateProject = async ({
+  id,
+  title,
+  description,
+  imageURL,
+  expiresAt,
+}) => {
+  try{
+    if (!ethereum) return alert('Please install Metamask')
+
+    const contract = await getEtheriumContract()
+    await contract.updateProject(id, title, description, imageURL, expiresAt)
+    await loadProject(id)
+  } catch(err){
+    reportError(err)
+  }
+}
+
+const deleteProject = async (id) => {
+  try{
+    if (!ethereum) return alert('Please install Metamask')
+    const contract = await getEtheriumContract()
+    await contract.deleteProject(id)
+  } catch(err){
+    reportError(err)
+  }
+}
+
+const backProject = async (id, amount) => {
+  try{
+    if (!ethereum) return alert('Please install Metamask')
+    const connectedAccount = getGlobalState('connectedAccount')
+    const contract = await getEtheriumContract()
+    amount = ethers.utils.parseEther(amount)
+
+    await contract.backProject(id, {
+      from: connectedAccount,
+      value: amount._hex,
+    })
+    await getBackers(id)
+  } catch(err){
+    reportError(err)
+  }
+}
+
 const loadProjects = async () => {
   try {
     if (!ethereum) return alert('Please install Metamask')
@@ -98,6 +143,19 @@ const loadProjects = async () => {
     setGlobalState('stats', structureStats(stats))
     setGlobalState('projects', structuredProjects(projects))
   } catch(err){
+    reportError(err)
+  }
+}
+
+const loadProject = async (id) => {
+  try{
+    if (!ethereum) return alert('Please install Metamask')
+    const contract = await getEtheriumContract()
+    const project = await contract.getProject(id)
+
+    setGlobalState('project', structuredProjects([project])[0])
+  } catch(err){
+    alert(JSON.stringify(err.message))
     reportError(err)
   }
 }
@@ -137,5 +195,15 @@ const structureStats = (stats) => ({
 
 
 
-export {connectWallet, isWallectConnected, createProject, loadProjects}
+export {
+  connectWallet, 
+  isWallectConnected, 
+  createProject, 
+  loadProjects, 
+  loadProject, 
+  updateProject, 
+  deleteProject, 
+  backProject,
+  
+}
 

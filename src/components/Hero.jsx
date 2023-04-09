@@ -1,7 +1,10 @@
 import React from 'react'
-import { setGlobalState } from '../store/Index'
+import { setGlobalState, useGlobalState } from '../store/Index'
 
 const Hero = () => {
+
+  const [stats] = useGlobalState('stats')
+
   return (
     <div className='text-center bg-white text-gray-800 py-24 px-6'>
       <h1 className='text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12'>
@@ -26,17 +29,17 @@ const Hero = () => {
       <div className="flex justify-center items-center mt-10">
         
         <div className="flex flex-col justify-center items-center h-20 border shadow-md w-full">
-          <span className='text-lg font-bold text-green-800 leading-5 '>{5}</span>
+          <span className='text-lg font-bold text-green-800 leading-5 '>{stats?.totalProjects || 0}</span>
           <span>Posts</span>
         </div>
 
         <div className="flex flex-col justify-center items-center h-20 border shadow-md w-full">
-          <span className='text-lg font-bold text-green-800 leading-5 '>{5}</span>
+          <span className='text-lg font-bold text-green-800 leading-5 '>{stats?.totalBacking || 0}</span>
           <span>Backings</span>
         </div>
 
         <div className="flex flex-col justify-center items-center h-20 border shadow-md w-full">
-          <span className='text-lg font-bold text-green-800 leading-5 '>{5} ETH</span>
+          <span className='text-lg font-bold text-green-800 leading-5 '>{stats?.totalDonations || 0} ETH</span>
           <span>Donated</span>
         </div>
 

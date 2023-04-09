@@ -34,7 +34,7 @@ const CreateProject = () => {
         }
 
         await createProject(params)
-        toast.success('Project Created Successfully, will reflect under a minute.')
+        toast.success('Project created successfully, will reflect under a minute.')
         onClose()
     }
 
