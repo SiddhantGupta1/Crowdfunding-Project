@@ -14,7 +14,7 @@ const BackProject = ({ project }) => {
         if(!amount) return
 
         await backProject(project?.id, amount)
-        toast.success('Project created successfully, will reflect under a minute.')
+        toast.success('Project backed successfully, will reflect under a minute.')
         setGlobalState('backModal', 'scale-0')
     }
 

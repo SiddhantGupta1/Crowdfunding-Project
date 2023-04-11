@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <div className='text-center bg-white text-gray-800 py-24 px-6'>
       <h1 className='text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12'>
-        <span className='capitalize'>Help people in need throughnp</span>
+        <span className='capitalize'>Help people in need through</span>
         <br />
         <span className='uppercase text-green-600'>crowdfunding.</span>
       </h1>

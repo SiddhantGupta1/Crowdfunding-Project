@@ -2,10 +2,12 @@ import React from 'react'
 import Identicons from 'react-identicons'
 import {FaEthereum} from 'react-icons/fa'
 import { daysRemaining, setGlobalState, truncate, useGlobalState } from '../store/Index'
+import { payoutProject } from '../services/blockchain'
 
 const ProjectDetails = ({ project }) => {
 
     const [connectedAccount] = useGlobalState('connectedAccount')
+    const expired = new Date().getTime() > Number(project?.expiresAt + '000')
 
   return (
     <div className='py-24 px-6 flex justify-center'>
@@ -20,7 +22,7 @@ const ProjectDetails = ({ project }) => {
                             {project?.title}
                         </h5>
                         <small className='text-gray-500 '>
-                            {new Date().getTime() > Number(project?.expiresAt + '000') ? 
+                            {expired ? 
                             'Expired' : daysRemaining(project?.expiresAt) + ' left'}
                         </small>
                     </div>
@@ -35,7 +37,9 @@ const ProjectDetails = ({ project }) => {
                         </div>
 
                         <div className='font-bold'>
-                            {project?.status == 0 ? (
+                            {expired ? (
+                                <small className='text-red-500'>Expired</small>
+                            ) : project?.status == 0 ? (
                                 <small className='text-gray-500'>Open</small>
                             ) : project?.status == 1 ? (
                                 <small className='text-green-500'>Accepted</small>
@@ -50,7 +54,7 @@ const ProjectDetails = ({ project }) => {
                     </div>
                     <div>
                         <p className='text-sm font-light mt-2'>{project?.description}</p>
-                        <div className="w-full bg-gray-300 mt-4">
+                        <div className="w-full bg-gray-300 mt-4 overflow-hidden">
                             <div className="bg-green-600 text-xs font-medium text-green-100 
                                 text-center p-0.5 leading-none rounded-l-full"
                                 style={{width: `${(project?.raised / project?.cost) * 100}%`}}>
@@ -80,7 +84,8 @@ const ProjectDetails = ({ project }) => {
                                     project?.status == 1 ? (
                                             <button type='button' className='inline-block px-6 py-2.5 
                                                 bg-orange-600 text-white font-medium text-xs leading-tight 
-                                                uppercase rounded-full shadow-md hover:bg-orange-700'>
+                                                uppercase rounded-full shadow-md hover:bg-orange-700'
+                                                onClick={() => payoutProject(project?.id)}>
                                                 Payout
                                             </button>
                                     ) : project?.status != 4 ? (
@@ -100,8 +105,8 @@ const ProjectDetails = ({ project }) => {
                                         </>
                                     ) : (
                                         <button type='button' className='inline-block px-6 py-2.5 
-                                            bg-gray-600 text-white font-medium text-xs leading-tight 
-                                            uppercase rounded-full shadow-md hover:bg-gray-700'>
+                                            bg-gray-700 text-white font-medium text-xs leading-tight 
+                                            uppercase cursor-default rounded-full shadow-md'>
                                             Project Closed
                                         </button>
                                     )
