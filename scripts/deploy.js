@@ -3,9 +3,15 @@ const fs = require('fs')
 
 async function main() {
   const contract_name = 'Genesis'
-  const taxFee = 5
+  const taxFee = 0
   const Contract = await ethers.getContractFactory(contract_name)
   const contract = await Contract.deploy(taxFee)
+
+
+// Changes to be made in performPayout regarding tax.
+// Add the feature of multiple photos.
+// Add the transparency of paying directly to the needy.
+// AN APPROVAL METHOD.
 
   await contract.deployed()
 
