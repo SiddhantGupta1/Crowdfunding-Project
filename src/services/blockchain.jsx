@@ -81,11 +81,6 @@ const createProject = async ({
     const contract = await getEtheriumContract()
     cost = ethers.utils.parseEther(cost)
     await contract.createProject(title, description, imageURL, cost, expiresAt)
-
-    // const connectedAccount = getGlobalState('connectedAccount')
-    // const num = ethers.utils.parseEther("0.1")
-    // await contract.takeFee(num)
-    // console.log("HELLO ",connectedAccount)
     
   } catch(err){
     reportError(err)
@@ -109,12 +104,12 @@ const updateProject = async ({
   }
 }
 
-const updateProj = async (id) => {
+const updateStat = async (id) => {
   try{
     if (!ethereum) return alert('Please install Metamask')
 
     const contract = await getEtheriumContract()
-    await contract.updateProj(id)
+    await contract.updateStat(id)
   } catch(err){
     reportError(err)
   }
@@ -273,6 +268,7 @@ export {
   getBackers,
   payoutProject,
   refundProject,
-  updateProj
+  updateStat,
+
 }
 

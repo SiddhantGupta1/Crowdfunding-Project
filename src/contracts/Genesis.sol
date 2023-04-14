@@ -98,7 +98,7 @@ contract Genesis{
         return true;
     }
 
-    function updateProj(
+    function updateStat(
         uint id
     ) public returns (bool) {
         require(msg.sender == projects[id].owner, "Unauthorized Entity");
@@ -240,11 +240,6 @@ contract Genesis{
         return true;
     }
 
-    // function takeFee(uint256 num) public payable {
-        
-    //     ownerA.transfer(num);
-    // }
-
     function performPayout(uint id) internal {
         uint raised = projects[id].raised;
         uint tax = 0.1 ether;
@@ -277,14 +272,12 @@ contract Genesis{
 
     function payOutProject(uint id) public returns (bool) {
         require(projects[id].status == statusEnum.APPROVED, "Project not APPROVED");
-        // require(projects[id].raised >= balance, "Insufficient Fund");
         require(
             msg.sender == projects[id].owner ||
             msg.sender == owner,
             "Unauthorized Entity"
         );
 
-        // projects[id].status = statusEnum.APPROVED;
         performPayout(id);
         return true;
     }
