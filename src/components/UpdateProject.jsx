@@ -49,7 +49,7 @@ const UpdateProject = ({ project }) => {
         <div className='bg-white shadow-xl shadow-black rounded-xl w-11/12 md:w-2/5 h-7/12 p-6'>
             <form onSubmit={handleSubmit} className='flex flex-col'>
                 <div className="flex justify-between items-center">
-                    <p className='font-semibold'>Edit Project</p>
+                    <p className='font-semibold'>Edit Post</p>
                     <button type='button' className='border-0 bg-transparent focus:outline-none' 
                         onClick={onClose}>
                         <FaTimes />
@@ -112,7 +112,7 @@ const UpdateProject = ({ project }) => {
                 <button type='submit' className='inline-block px-6 py-2.5 
                     bg-green-600 text-white font-medium text-md leading-tight 
                     rounded-full shadow-md hover:bg-green-700 mt-5'>
-                    Update Project
+                    Update Post
                 </button>
             </form>
         </div>

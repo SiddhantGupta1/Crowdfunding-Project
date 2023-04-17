@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\Siddhu\\OneDrive\\Desktop\\React\\crowdfunding\\src\\contracts\\Genesis.sol": {
-      "lastModificationDate": 1684360615154,
-      "contentHash": "05b29669fd75568077d2adf4d9448269",
+      "lastModificationDate": 1681512255134,
+      "contentHash": "b679eaa4818469acff1ef69e7c899fa0",
       "sourceName": "src/contracts/Genesis.sol",
       "solcConfig": {
         "version": "0.8.11",

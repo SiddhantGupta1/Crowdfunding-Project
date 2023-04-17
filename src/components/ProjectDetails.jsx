@@ -74,7 +74,7 @@ const ProjectDetails = ({ project }) => {
                                     bg-green-600 text-white font-medium text-xs leading-tight 
                                     uppercase rounded-full shadow-md hover:bg-green-700'
                                     onClick={() => setGlobalState('backModal', 'scale-100')}>
-                                    Back Project
+                                    Donate
                                 </button>
                                 
                             ) : null}
@@ -123,7 +123,7 @@ const ProjectDetails = ({ project }) => {
                                         <button type='button' className='inline-block px-6 py-2.5 
                                             bg-gray-700 text-white font-medium text-xs leading-tight 
                                             uppercase cursor-default rounded-full shadow-md'>
-                                            Project Closed
+                                            Donations Ended
                                         </button>
                                     )
                                 ) : null

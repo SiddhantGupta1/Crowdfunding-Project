@@ -35,7 +35,7 @@ const Hero = () => {
 
         <div className="flex flex-col justify-center items-center h-20 border shadow-md w-full">
           <span className='text-lg font-bold text-green-800 leading-5 '>{stats?.totalBacking || 0}</span>
-          <span>Backings</span>
+          <span>Donations</span>
         </div>
 
         <div className="flex flex-col justify-center items-center h-20 border shadow-md w-full">

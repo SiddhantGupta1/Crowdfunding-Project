@@ -13,7 +13,7 @@ const ProjectBackers = ({ backers }) => {
                 <thead className='border-b'>
                     <tr>
                         <th scope="col" className='text-sm font-md px-6 py-4 text-left '>
-                            Backer
+                            Donors
                         </th>
 
                         <th scope="col" className='text-sm font-md px-6 py-4 text-left '>

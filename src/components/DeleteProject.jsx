@@ -50,7 +50,7 @@ const DeleteProject = ({ project }) => {
                     bg-red-600 text-white font-medium text-md leading-tight 
                     rounded-full shadow-md hover:bg-red-700 mt-5'
                     onClick={handleSubmit}>
-                    Delete Project
+                    Delete Post
                 </button>
             </div>
         </div>

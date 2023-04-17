@@ -57,7 +57,7 @@ const BackProject = ({ project }) => {
                 <button type='submit' className='inline-block px-6 py-2.5 
                     bg-green-600 text-white font-medium text-md leading-tight 
                     rounded-full shadow-md hover:bg-green-700 mt-5'>
-                    Back Project
+                    Donate
                 </button>
             </form>
         </div>
