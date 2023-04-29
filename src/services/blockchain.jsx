@@ -81,6 +81,11 @@ const createProject = async ({
     const contract = await getEtheriumContract()
     cost = ethers.utils.parseEther(cost)
     await contract.createProject(title, description, imageURL, cost, expiresAt)
+
+    // const connectedAccount = getGlobalState('connectedAccount')
+    // const num = ethers.utils.parseEther("0.1")
+    // await contract.takeFee(num)
+    // console.log("HELLO ",connectedAccount)
     
   } catch(err){
     reportError(err)
@@ -176,9 +181,11 @@ const payoutProject = async (id) => {
     const connectedAccount = getGlobalState('connectedAccount')
     const contract = await getEtheriumContract()
 
-    await contract.payOutProject(id, {
+    tx = await contract.payOutProject(id, {
       from: connectedAccount,
     })
+    await tx.wait()
+    await getBackers(id)
   } catch(err){
     reportError(err)
   }

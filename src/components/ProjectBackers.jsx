@@ -6,8 +6,6 @@ import Moment from 'react-moment'
 
 const ProjectBackers = ({ backers }) => {
 
-    console.log(backers)
-
   return (
     <div className='flex flex-col justify-center items-start md:w-2/3 px-6 mx-auto'>
         <div className="max-h-[calc(100vh_-_25rem)] overflow-auto shadow-md rounded-md w-full mb-10">

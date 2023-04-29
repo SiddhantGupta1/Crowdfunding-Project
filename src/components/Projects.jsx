@@ -87,8 +87,6 @@ const ProjectCard = ({project}) => {
                             ) : project.status == 1 ? (
                                 <small className='text-green-500'>Accepted</small>
                             ) : project.status == 2 ? (
-                                <small className='text-gray-500'>Reverted</small>
-                            ) : project.status == 3 ? (
                                 <small className='text-red-500'>Deleted</small>
                             ) : (
                                 <small className='text-orange-500'>Paid</small>

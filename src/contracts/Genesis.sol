@@ -3,7 +3,6 @@ pragma solidity ^0.8.7;
 
 contract Genesis{
     address public owner;
-    uint public projectTax;
     uint public projectCount;
     uint public balance;
     statsStruct public stats;
@@ -16,7 +15,6 @@ contract Genesis{
     enum statusEnum {
         OPEN,
         APPROVED,
-        REVERTED,
         DELETED,
         PAIDOUT
     }
@@ -60,9 +58,8 @@ contract Genesis{
         uint256 timestamp
     );
 
-    constructor(uint _projectTax) {
+    constructor() {
         owner = msg.sender;
-        projectTax = _projectTax;
     }
 
     function createProject(
@@ -190,26 +187,31 @@ contract Genesis{
             block.timestamp
         );
 
-        if(projects[id].raised >= projects[id].cost) {
+        if(projects[id].raised >= projects[id].cost ||
+            block.timestamp >= projects[id].expiresAt) {
             projects[id].status = statusEnum.APPROVED;
             balance += projects[id].raised;
             performPayout(id);
             return true;
         }
 
-        if(block.timestamp >= projects[id].expiresAt) {
-            projects[id].status = statusEnum.REVERTED;
-            performRefund(id);
-            return true;
-        }
+        // if(block.timestamp >= projects[id].expiresAt) {
+        //     projects[id].status = statusEnum.APPROVED;
+        //     performRefund(id);
+        //     return true;
+        // }
 
         return true;
     }
 
+    // function takeFee(uint256 num) public payable {
+        
+    //     ownerA.transfer(num);
+    // }
+
     function performPayout(uint id) internal {
         uint raised = projects[id].raised;
-        uint tax = (raised * projectTax) / 100;
-
+        uint tax = 0.1 ether;
         projects[id].status = statusEnum.PAIDOUT;
 
         payTo(projects[id].owner, (raised - tax));
@@ -225,17 +227,17 @@ contract Genesis{
         );
     }
 
-    function requestRefund(uint id) public returns (bool) {
-        require(
-            projects[id].status != statusEnum.REVERTED ||
-            projects[id].status != statusEnum.DELETED,
-            "Project not marked as revert or delete"
-        );
+    // function requestRefund(uint id) public returns (bool) {
+    //     require(
+    //         projects[id].status != statusEnum.REVERTED ||
+    //         projects[id].status != statusEnum.DELETED,
+    //         "Project not marked as delete"
+    //     );
         
-        projects[id].status = statusEnum.REVERTED;
-        performRefund(id);
-        return true;
-    }
+    //     projects[id].status = statusEnum.REVERTED;
+    //     performRefund(id);
+    //     return true;
+    // }
 
     function payOutProject(uint id) public returns (bool) {
         require(projects[id].status == statusEnum.APPROVED, "Project not APPROVED");
@@ -246,12 +248,9 @@ contract Genesis{
             "Unauthorized Entity"
         );
 
+        // projects[id].status = statusEnum.APPROVED;
         performPayout(id);
         return true;
-    }
-
-    function changeTax(uint _taxPct) public ownerOnly {
-        projectTax = _taxPct;
     }
 
     function getProject(uint id) public view returns (projectStruct memory) {

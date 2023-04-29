@@ -3,15 +3,16 @@ const fs = require('fs')
 
 async function main() {
   const contract_name = 'Genesis'
-  const taxFee = 0
   const Contract = await ethers.getContractFactory(contract_name)
-  const contract = await Contract.deploy(taxFee)
+  const contract = await Contract.deploy()
 
 
-// Changes to be made in performPayout regarding tax.
 // Add the feature of multiple photos.
-// Add the transparency of paying directly to the needy.
 // AN APPROVAL METHOD.
+// Maybe we can check the contractaddress.json with the address 
+// the admin enters while logging or approving.
+// Expired projects are donatable. WHYYY??
+
 
   await contract.deployed()
 

@@ -44,8 +44,6 @@ const ProjectDetails = ({ project }) => {
                             ) : project?.status == 1 ? (
                                 <small className='text-green-500'>Accepted</small>
                             ) : project?.status == 2 ? (
-                                <small className='text-gray-500'>Reverted</small>
-                            ) : project?.status == 3 ? (
                                 <small className='text-red-500'>Deleted</small>
                             ) : (
                                 <small className='text-orange-500'>Paid</small>
@@ -70,7 +68,7 @@ const ProjectDetails = ({ project }) => {
                         </div>
 
                         <div className='flex justify-start w-full items-center space-x-2 mt-4'>
-                            {project?.status == 0 ? (
+                            {project?.status == 0 && !expired ? (
                                 <button type='button' className='inline-block px-6 py-2.5 
                                     bg-green-600 text-white font-medium text-xs leading-tight 
                                     uppercase rounded-full shadow-md hover:bg-green-700'
@@ -80,7 +78,15 @@ const ProjectDetails = ({ project }) => {
                             ) : null}
                                 
                             {connectedAccount == project?.owner ? (
-                                project?.status != 3 ? (
+                                expired ? (
+                                    <button type='button' className='inline-block px-6 py-2.5 
+                                        bg-orange-600 text-white font-medium text-xs leading-tight 
+                                        uppercase rounded-full shadow-md hover:bg-orange-700'
+                                        onClick={() => payoutProject(project?.id)}>
+                                        Payout
+                                    </button>
+                                ) : 
+                                project?.status != 2 ? (
                                     project?.status == 1 ? (
                                             <button type='button' className='inline-block px-6 py-2.5 
                                                 bg-orange-600 text-white font-medium text-xs leading-tight 
@@ -88,7 +94,7 @@ const ProjectDetails = ({ project }) => {
                                                 onClick={() => payoutProject(project?.id)}>
                                                 Payout
                                             </button>
-                                    ) : project?.status != 4 ? (
+                                    ) : project?.status != 3 ? (
                                         <>
                                             <button type='button' className='inline-block px-6 py-2.5 
                                                 bg-gray-600 text-white font-medium text-xs leading-tight 
