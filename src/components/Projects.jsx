@@ -5,7 +5,7 @@ import { daysRemaining, truncate } from '../store/Index'
 import { FaEthereum } from 'react-icons/fa'
 
 const Projects = ({ projects }) => {
-
+    console.log(projects)
     const [end, setEnd] = useState(4)
     const [count, setCount] = useState(4)
     const [collection, setCollection] = useState([])

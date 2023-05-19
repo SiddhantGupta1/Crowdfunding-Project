@@ -4,6 +4,7 @@ import ProjectBackers from '../components/ProjectBackers'
 import UpdateProject from '../components/UpdateProject'
 import BackProject from '../components/BackProject'
 import DeleteProject from '../components/DeleteProject'
+import RefundProject from '../components/RefundProject'
 import { getBackers, loadProject } from '../services/blockchain'
 import { useParams } from 'react-router-dom'
 import { useGlobalState } from '../store/Index'
@@ -28,6 +29,7 @@ const Project = () => {
       <UpdateProject project={project[0]} />
       <BackProject project={project[0]} />
       <DeleteProject project={project[0]} />
+      <RefundProject project={project[0]}/>
     </>
   ) : null
 }

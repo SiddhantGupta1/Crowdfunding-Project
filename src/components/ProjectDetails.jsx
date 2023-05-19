@@ -5,7 +5,7 @@ import { daysRemaining, setGlobalState, truncate, useGlobalState } from '../stor
 import { payoutProject } from '../services/blockchain'
 
 const ProjectDetails = ({ project }) => {
-
+    console.log(project)
     const [connectedAccount] = useGlobalState('connectedAccount')
     const expired = new Date().getTime() > Number(project?.expiresAt + '000')
 
@@ -69,22 +69,32 @@ const ProjectDetails = ({ project }) => {
 
                         <div className='flex justify-start w-full items-center space-x-2 mt-4'>
                             {project?.status == 0 && !expired ? (
+                                
                                 <button type='button' className='inline-block px-6 py-2.5 
                                     bg-green-600 text-white font-medium text-xs leading-tight 
                                     uppercase rounded-full shadow-md hover:bg-green-700'
                                     onClick={() => setGlobalState('backModal', 'scale-100')}>
                                     Back Project
                                 </button>
+                                
                             ) : null}
                                 
                             {connectedAccount == project?.owner ? (
                                 expired ? (
-                                    <button type='button' className='inline-block px-6 py-2.5 
+                                    project?.status == 0 ? (
+                                        <button type='button' className='inline-block px-6 py-2.5 
                                         bg-orange-600 text-white font-medium text-xs leading-tight 
                                         uppercase rounded-full shadow-md hover:bg-orange-700'
-                                        onClick={() => payoutProject(project?.id)}>
-                                        Payout
-                                    </button>
+                                        onClick={() => setGlobalState('refundModal', 'scale-100')}>
+                                        Refund
+                                        </button>
+                                    ) : (
+                                        <button type='button' className='inline-block px-6 py-2.5 
+                                        bg-orange-600 text-white font-medium text-xs leading-tight 
+                                        uppercase rounded-full shadow-md'>
+                                        Refunded
+                                        </button>
+                                    )
                                 ) : 
                                 project?.status != 2 ? (
                                     project?.status == 1 ? (

@@ -98,6 +98,23 @@ contract Genesis{
         return true;
     }
 
+    function updateProj(
+        uint id
+    ) public returns (bool) {
+        require(msg.sender == projects[id].owner, "Unauthorized Entity");
+
+        projects[id].status = statusEnum.APPROVED;
+
+        emit Action (
+            id,
+            "STATUS UPDATED",
+            msg.sender,
+            block.timestamp
+        );
+
+        return true;
+    }
+
     function updateProject(
         uint id,
         string memory title,
@@ -187,8 +204,7 @@ contract Genesis{
             block.timestamp
         );
 
-        if(projects[id].raised >= projects[id].cost ||
-            block.timestamp >= projects[id].expiresAt) {
+        if(projects[id].raised >= projects[id].cost) {
             projects[id].status = statusEnum.APPROVED;
             balance += projects[id].raised;
             performPayout(id);
@@ -200,6 +216,26 @@ contract Genesis{
         //     performRefund(id);
         //     return true;
         // }
+
+        return true;
+    }
+
+    function refundProject(uint id) public payable returns (bool) {
+        require(projectExist[id], "Project not found");
+        require(projects[id].status == statusEnum.OPEN, "Project no longer opened");
+
+        emit Action (
+            id,
+            "PROJECT REFUNDED",
+            msg.sender,
+            block.timestamp
+        );
+
+        if(block.timestamp >= projects[id].expiresAt) {
+            projects[id].status = statusEnum.APPROVED;
+            performRefund(id);
+            return true;
+        }
 
         return true;
     }

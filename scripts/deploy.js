@@ -11,7 +11,6 @@ async function main() {
 // AN APPROVAL METHOD.
 // Maybe we can check the contractaddress.json with the address 
 // the admin enters while logging or approving.
-// Expired projects are donatable. WHYYY??
 
 
   await contract.deployed()

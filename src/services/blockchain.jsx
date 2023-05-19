@@ -109,6 +109,17 @@ const updateProject = async ({
   }
 }
 
+const updateProj = async (id) => {
+  try{
+    if (!ethereum) return alert('Please install Metamask')
+
+    const contract = await getEtheriumContract()
+    await contract.updateProj(id)
+  } catch(err){
+    reportError(err)
+  }
+}
+
 const deleteProject = async (id) => {
   try{
     if (!ethereum) return alert('Please install Metamask')
@@ -129,6 +140,20 @@ const backProject = async (id, amount) => {
     await contract.backProject(id, {
       from: connectedAccount,
       value: amount._hex,
+    })
+  } catch(err){
+    reportError(err)
+  }
+}
+
+const refundProject = async (id) => {
+  try{
+    if (!ethereum) return alert('Please install Metamask')
+    const connectedAccount = getGlobalState('connectedAccount')
+    const contract = await getEtheriumContract()
+
+    await contract.refundProject(id, {
+      from: connectedAccount,
     })
   } catch(err){
     reportError(err)
@@ -247,6 +272,7 @@ export {
   backProject,
   getBackers,
   payoutProject,
-  
+  refundProject,
+  updateProj
 }
 
